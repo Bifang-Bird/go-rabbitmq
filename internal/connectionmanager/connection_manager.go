@@ -4,9 +4,9 @@ import (
 	"sync"
 	"time"
 
+	"github.com/Bifang-Bird/go-rabbitmq/internal/dispatcher"
+	"github.com/Bifang-Bird/go-rabbitmq/internal/logger"
 	amqp "github.com/rabbitmq/amqp091-go"
-	"go-rabbitmq/internal/dispatcher"
-	"go-rabbitmq/internal/logger"
 )
 
 // ConnectionManager -

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	rabbitmq "go-rabbitmq"
+	rabbitmq "github.com/Bifang-Bird/go-rabbitmq"
 	"log"
 	"os"
 	"os/signal"

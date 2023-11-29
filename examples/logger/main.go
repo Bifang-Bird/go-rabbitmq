@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	rabbitmq "go-rabbitmq"
+	rabbitmq "github.com/Bifang-Bird/go-rabbitmq"
 )
 
 // errorLogger is used in WithPublisherOptionsLogger to create a custom logger

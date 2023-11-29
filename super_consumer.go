@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/Bifang-Bird/go-rabbitmq/internal/channelmanager"
 	amqp "github.com/rabbitmq/amqp091-go"
-	"github.com/wagslane/go-rabbitmq/internal/channelmanager"
 )
 
 // Consumer with multiple bindings from multiple exchanges

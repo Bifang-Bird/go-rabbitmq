@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/wagslane/go-rabbitmq/internal/logger"
+	"github.com/Bifang-Bird/go-rabbitmq/internal/logger"
 )
 
 // Logger is describes a logging structure. It can be set using
@@ -14,6 +14,11 @@ type Logger logger.Logger
 const loggingPrefix = "gorabbit"
 
 type stdDebugLogger struct{}
+
+func (l stdDebugLogger) Tracef(s string, i ...interface{}) {
+	//TODO implement me
+	panic("implement me")
+}
 
 // Fatalf -
 func (l stdDebugLogger) Fatalf(format string, v ...interface{}) {

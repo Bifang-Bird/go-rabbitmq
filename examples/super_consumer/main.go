@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	rabbitmq "go-rabbitmq"
 	"log"
 	"os"
 	"os/signal"

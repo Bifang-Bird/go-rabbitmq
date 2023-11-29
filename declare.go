@@ -1,7 +1,7 @@
 package rabbitmq
 
 import (
-	"github.com/Bifang-Bird/go-rabbitmq/internal/channelmanager"
+	"go-rabbitmq/internal/channelmanager"
 )
 
 func declareQueue(chanManager *channelmanager.ChannelManager, options QueueOptions) error {

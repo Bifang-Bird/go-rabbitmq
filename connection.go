@@ -1,8 +1,8 @@
 package rabbitmq
 
 import (
-	"github.com/Bifang-Bird/go-rabbitmq/internal/connectionmanager"
 	amqp "github.com/rabbitmq/amqp091-go"
+	"go-rabbitmq/internal/connectionmanager"
 )
 
 // Conn manages the connection to a rabbit cluster

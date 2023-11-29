@@ -1,4 +1,4 @@
-module github.com/Bifang-Bird/go-rabbitmq
+module go-rabbitmq
 
 go 1.20
 

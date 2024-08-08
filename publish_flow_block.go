@@ -29,15 +29,37 @@ func (publisher *Publisher) startNotifyBlockedHandler() {
 	publisher.disablePublishDueToBlocked = false
 	publisher.disablePublishDueToBlockedMux.Unlock()
 
-	for b := range blockings {
-		publisher.disablePublishDueToBlockedMux.Lock()
-		if b.Active {
-			publisher.options.Logger.Warnf("pausing publishing due to TCP blocking from server")
-			publisher.disablePublishDueToBlocked = true
-		} else {
-			publisher.disablePublishDueToBlocked = false
-			publisher.options.Logger.Warnf("resuming publishing due to TCP blocking from server")
+	//for b := range blockings {
+	//	publisher.disablePublishDueToBlockedMux.Lock()
+	//	if b.Active {
+	//		publisher.options.Logger.Warnf("pausing publishing due to TCP blocking from server")
+	//		publisher.disablePublishDueToBlocked = true
+	//	} else {
+	//		publisher.disablePublishDueToBlocked = false
+	//		publisher.options.Logger.Warnf("resuming publishing due to TCP blocking from server")
+	//	}
+	//	publisher.disablePublishDueToBlockedMux.Unlock()
+	//}
+
+	for {
+		select {
+		case b, ok := <-blockings:
+			if !ok {
+				// 通道关闭，退出 goroutine
+				return
+			}
+			publisher.disablePublishDueToBlockedMux.Lock()
+			if b.Active {
+				publisher.options.Logger.Warnf("pausing publishing due to TCP blocking from server")
+				publisher.disablePublishDueToBlocked = true
+			} else {
+				publisher.disablePublishDueToBlocked = false
+				publisher.options.Logger.Warnf("resuming publishing due to TCP blocking from server")
+			}
+			publisher.disablePublishDueToBlockedMux.Unlock()
+		case <-publisher.stopCh:
+			// 接收到停止信号，退出 goroutine
+			return
 		}
-		publisher.disablePublishDueToBlockedMux.Unlock()
 	}
 }

@@ -42,6 +42,7 @@ type Confirmation struct {
 
 // Publisher allows you to publish messages safely across an open connection
 type Publisher struct {
+	stopCh                     chan struct{}
 	chanManager                *channelmanager.ChannelManager
 	connManager                *connectionmanager.ConnectionManager
 	reconnectErrCh             <-chan error
@@ -85,6 +86,7 @@ func NewPublisher(conn *Conn, optionFuncs ...func(*PublisherOptions)) (*Publishe
 
 	reconnectErrCh, closeCh := chanManager.NotifyReconnect()
 	publisher := &Publisher{
+		stopCh:                        make(chan struct{}),
 		chanManager:                   chanManager,
 		connManager:                   conn.connectionManager,
 		reconnectErrCh:                reconnectErrCh,
@@ -281,6 +283,7 @@ func (publisher *Publisher) PublishWithDeferredConfirmWithContext(
 func (publisher *Publisher) Close() {
 	// close the channel so that rabbitmq server knows that the
 	// publisher has been stopped.
+	close(publisher.stopCh)
 	err := publisher.chanManager.Close()
 	if err != nil {
 		publisher.options.Logger.Warnf("error while closing the channel: %v", err)

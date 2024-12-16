@@ -288,7 +288,7 @@ func (publisher *Publisher) Close() {
 	if err != nil {
 		publisher.options.Logger.Warnf("error while closing the channel: %v", err)
 	}
-	publisher.options.Logger.Infof("closing publisher...")
+	//publisher.options.Logger.Infof("closing publisher...")
 	go func() {
 		publisher.closeConnectionToManagerCh <- struct{}{}
 	}()

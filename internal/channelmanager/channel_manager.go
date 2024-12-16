@@ -72,7 +72,7 @@ func (chanManager *ChannelManager) startNotifyCancelOrClosed() {
 			chanManager.dispatcher.Dispatch(err)
 		}
 		if err == nil {
-			chanManager.logger.Infof("amqp channel closed gracefully")
+			//chanManager.logger.Infof("amqp channel closed gracefully")
 		}
 	case err := <-notifyCancelChan:
 		chanManager.logger.Errorf("attempting to reconnect to amqp server after cancel with error: %s", err)
@@ -130,7 +130,7 @@ func (chanManager *ChannelManager) reconnect() error {
 
 // Close safely closes the current channel and connection
 func (chanManager *ChannelManager) Close() error {
-	chanManager.logger.Infof("closing channel manager...")
+	//chanManager.logger.Infof("closing channel manager...")
 	chanManager.channelMux.Lock()
 	defer chanManager.channelMux.Unlock()
 

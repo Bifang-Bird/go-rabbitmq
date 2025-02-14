@@ -284,14 +284,13 @@ func (publisher *Publisher) PublishWithDeferredConfirmWithContext(
 func (publisher *Publisher) Close() {
 	// close the channel so that rabbitmq server knows that the
 	// publisher has been stopped.
-	close(publisher.stopCh)
 	close(publisher.closeConnectionToManagerCh)
 	err := publisher.chanManager.Close()
 	if err != nil {
 		publisher.options.Logger.Warnf("error while closing the channel: %v", err)
 	}
+	close(publisher.stopCh)
 	//publisher.options.Logger.Infof("closing publisher...")
-
 	//go func() {
 	//	publisher.closeConnectionToManagerCh <- struct{}{}
 	//}()

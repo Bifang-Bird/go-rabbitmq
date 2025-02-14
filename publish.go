@@ -134,6 +134,7 @@ func (publisher *Publisher) startup() error {
 	if err != nil {
 		return fmt.Errorf("declare exchange failed: %w", err)
 	}
+	publisher.stopCh = make(chan struct{})
 	go publisher.startNotifyFlowHandler()
 	go publisher.startNotifyBlockedHandler()
 	return nil
@@ -284,14 +285,16 @@ func (publisher *Publisher) Close() {
 	// close the channel so that rabbitmq server knows that the
 	// publisher has been stopped.
 	close(publisher.stopCh)
+	close(publisher.closeConnectionToManagerCh)
 	err := publisher.chanManager.Close()
 	if err != nil {
 		publisher.options.Logger.Warnf("error while closing the channel: %v", err)
 	}
 	//publisher.options.Logger.Infof("closing publisher...")
-	go func() {
-		publisher.closeConnectionToManagerCh <- struct{}{}
-	}()
+
+	//go func() {
+	//	publisher.closeConnectionToManagerCh <- struct{}{}
+	//}()
 }
 
 // NotifyReturn registers a listener for basic.return methods.
